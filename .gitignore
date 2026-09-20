@@ -1,0 +1,30 @@
+# --- Android / student-app ---
+build/
+.gradle/
+local.properties
+captures/
+.cxx/
+*.apk
+*.aab
+*.keystore
+*.jks
+
+# --- Web / admin-web ---
+node_modules/
+dist/
+.next/
+.vercel/
+*.log
+
+# --- Secrets ---
+# Supabase keys and the Google Maps API key live here. Never commit them.
+.env
+.env.local
+.env*.local
+
+# --- Editors / OS ---
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
