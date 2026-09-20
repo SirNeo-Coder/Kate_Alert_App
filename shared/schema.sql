@@ -64,16 +64,70 @@ create index alerts_status_raised_at_idx on alerts (status, raised_at desc);
 -- ---------------------------------------------------------------------------
 -- ROW-LEVEL SECURITY
 --
--- Not written yet, deliberately. Supabase locks every table until policies are
--- added, so nothing can read or write these tables as they stand.
+-- Two kinds of caller:
 --
--- What the policies have to account for: the Android app talks to Supabase with
--- the public anon key, which ships inside the APK and should be assumed
--- readable by anyone who has the app. So the student app must be able to INSERT
--- an alert, but must not be able to read other students' alerts. The admin side
--- must be able to read everything, which means the admin has to authenticate as
--- something other than anon.
+--   anon          the Android student app. Its key ships inside the APK, so
+--                 assume anyone with the app has it.
+--   authenticated a campus admin, signed in through the web app with Supabase
+--                 Auth. Admin accounts are created by the developer in the
+--                 Supabase dashboard; there is no public sign-up.
 --
--- This depends on how admin sign-in works, which is not decided. See
--- docs/open-items.md.
+-- Nobody else touches the database directly.
+-- ---------------------------------------------------------------------------
+
+alter table schools   enable row level security;
+alter table buildings enable row level security;
+alter table alerts    enable row level security;
+
+-- The student app must read the building list to work out the three nearest
+-- buildings, so this is readable without signing in. It is only building names
+-- and map coordinates.
+create policy "anyone can read schools"
+  on schools for select
+  using (true);
+
+create policy "anyone can read buildings"
+  on buildings for select
+  using (true);
+
+-- Campus setup: only a signed-in admin can add or edit buildings.
+create policy "admins manage schools"
+  on schools for all
+  to authenticated
+  using (true) with check (true);
+
+create policy "admins manage buildings"
+  on buildings for all
+  to authenticated
+  using (true) with check (true);
+
+-- The student app can raise an alert, and that is all it can do. There is no
+-- select policy for anon on alerts, so the app cannot read back any alert --
+-- neither its own nor anyone else's.
+create policy "student app can raise an alert"
+  on alerts for insert
+  to anon
+  with check (true);
+
+-- Admins see every alert and can change its status.
+create policy "admins read alerts"
+  on alerts for select
+  to authenticated
+  using (true);
+
+create policy "admins update alerts"
+  on alerts for update
+  to authenticated
+  using (true) with check (true);
+
+-- Nothing deletes alerts. An alert is resolved by setting its status, not by
+-- removing the record.
+
+-- ---------------------------------------------------------------------------
+-- KNOWN GAP
+--
+-- Anyone holding the anon key can insert an alert, so the app can be used to
+-- raise false alarms at volume. Nothing here prevents that. Options when it
+-- matters: rate-limit inserts, or check the student_id against a roster of
+-- issued NFC tags. Not solved now -- see docs/open-items.md.
 -- ---------------------------------------------------------------------------

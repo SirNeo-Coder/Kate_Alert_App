@@ -27,3 +27,8 @@ One thing to keep in mind when that comes back up: the tag is unique to the
 student, so an alert record can always be traced back to them whatever the toggle
 says. The honest description of the toggle is "show the name on the admin map, or
 don't" — not "the school cannot know who it was."
+
+**False alarms.** Anyone holding the Android app's anon key can insert an alert,
+so the app can be used to raise false alarms at volume. Options when it matters:
+rate-limit inserts, or check the student identifier against a roster of issued
+NFC tags. Not solved now — noted in `shared/schema.sql`.
