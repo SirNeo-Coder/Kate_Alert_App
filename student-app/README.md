@@ -14,8 +14,8 @@ the Gradle project files will be generated there.
 
 ## Data it depends on
 
-- `../shared/campus_buildings.json` — the campus building list.
-- `../shared/alert_record.json` — the alert record format.
+- `../shared/campus_buildings.jsonc` — the campus building list.
+- `../shared/alert_record.jsonc` — the alert record format.
 
 ## Status
 

@@ -15,8 +15,8 @@ The monitoring web application used by campus administrators.
 
 ## Data it depends on
 
-- `../shared/campus_buildings.json` — the campus building list, including map coordinates.
-- `../shared/alert_record.json` — the alert record format.
+- `../shared/campus_buildings.jsonc` — the campus building list, including map coordinates.
+- `../shared/alert_record.jsonc` — the alert record format.
 
 ## Status
 

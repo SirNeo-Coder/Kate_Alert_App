@@ -1,0 +1,37 @@
+// Alert record format.
+//
+// The shape of a single emergency alert. The student app produces records in
+// this shape; the admin web app reads them.
+//
+// Fields:
+//   student_id   identifies the student who raised the alert, read from their
+//                personal NFC tag
+//   building     the building name, matching a "name" in campus_buildings.jsonc
+//   floor        the floor the student confirmed
+//   room         the room the student confirmed
+//   timestamp    when the alert was raised
+//   status       where the alert stands — e.g. newly raised, acknowledged by an
+//                administrator, resolved
+//
+// The compound is not stored here. It is carried on the building record in
+// campus_buildings.jsonc, so the building name alone determines it.
+//
+// ---------------------------------------------------------------------------
+// NEAREST-BUILDING RULE
+//
+// When a student raises an alert, GPS does not pick the building outright.
+// It proposes the THREE nearest buildings, and the student confirms which one
+// of the three they are in.
+//
+// This is recorded here so the rule is not lost. The logic that finds the three
+// nearest buildings has not been written yet.
+// ---------------------------------------------------------------------------
+
+{
+  "student_id": null,
+  "building": null,
+  "floor": null,
+  "room": null,
+  "timestamp": null,
+  "status": null
+}

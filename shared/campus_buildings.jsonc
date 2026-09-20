@@ -1,0 +1,182 @@
+// Campus building list — Polytechnic University of the Philippines, Sta. Mesa.
+//
+// The campus is three separate compounds:
+//   "A. Mabini"      — the main campus
+//   "NDC Compound"
+//   "M.H. Del Pilar"
+//
+// Every building record carries its own compound name. The compound is therefore
+// never a separate question the student answers — confirming the building
+// already determines the compound.
+//
+// Still to be supplied:
+//   latitude, longitude — map coordinates for each building
+//   floors              — how many floors the building has
+//   rooms               — the room numbers on each floor, keyed by floor
+//
+// Fields per building:
+//   name        the building's name as students know it
+//   compound    one of the three compound names above
+//   latitude    decimal degrees, north positive
+//   longitude   decimal degrees, east positive
+//   floors      number of floors
+//   rooms       floor number -> list of room numbers on that floor
+
+[
+  // --- A. Mabini Campus ------------------------------------------------------
+
+  // The Main Academic Building is divided into wings: North Wing and South Wing.
+  // Its rooms are numbered with the floor as the first digit — Room 420 is on
+  // the 4th floor. The wing is part of how a room is located, so when the room
+  // list below is filled in, it must distinguish North from South.
+  {
+    "name": "Main Academic Building",
+    "compound": "A. Mabini",
+    "latitude": null,
+    "longitude": null,
+    "floors": null,
+    "rooms": {}
+  },
+  {
+    "name": "Ninoy Aquino Library and Learning Resources Center",
+    "compound": "A. Mabini",
+    "latitude": null,
+    "longitude": null,
+    "floors": null,
+    "rooms": {}
+  },
+  {
+    "name": "PUP Gym",
+    "compound": "A. Mabini",
+    "latitude": null,
+    "longitude": null,
+    "floors": null,
+    "rooms": {}
+  },
+  {
+    "name": "PUP Grandstand and Oval",
+    "compound": "A. Mabini",
+    "latitude": null,
+    "longitude": null,
+    "floors": null,
+    "rooms": {}
+  },
+  {
+    "name": "Laboratory High School",
+    "compound": "A. Mabini",
+    "latitude": null,
+    "longitude": null,
+    "floors": null,
+    "rooms": {}
+  },
+  {
+    "name": "Interfaith Chapel",
+    "compound": "A. Mabini",
+    "latitude": null,
+    "longitude": null,
+    "floors": null,
+    "rooms": {}
+  },
+  {
+    "name": "Charlie del Rosario Student Development Center",
+    "compound": "A. Mabini",
+    "latitude": null,
+    "longitude": null,
+    "floors": null,
+    "rooms": {}
+  },
+  {
+    "name": "Amphitheater",
+    "compound": "A. Mabini",
+    "latitude": null,
+    "longitude": null,
+    "floors": null,
+    "rooms": {}
+  },
+  {
+    "name": "PUP ICT Center",
+    "compound": "A. Mabini",
+    "latitude": null,
+    "longitude": null,
+    "floors": null,
+    "rooms": {}
+  },
+
+  // --- NDC Compound ----------------------------------------------------------
+
+  {
+    "name": "College of Architecture and Fine Arts",
+    "compound": "NDC Compound",
+    "latitude": null,
+    "longitude": null,
+    "floors": null,
+    "rooms": {}
+  },
+  {
+    "name": "College of Engineering",
+    "compound": "NDC Compound",
+    "latitude": null,
+    "longitude": null,
+    "floors": null,
+    "rooms": {}
+  },
+  {
+    "name": "College of Communications",
+    "compound": "NDC Compound",
+    "latitude": null,
+    "longitude": null,
+    "floors": null,
+    "rooms": {}
+  },
+  {
+    "name": "MassCom Theater",
+    "compound": "NDC Compound",
+    "latitude": null,
+    "longitude": null,
+    "floors": null,
+    "rooms": {}
+  },
+  {
+    "name": "College of Technology",
+    "compound": "NDC Compound",
+    "latitude": null,
+    "longitude": null,
+    "floors": null,
+    "rooms": {}
+  },
+
+  // --- M.H. Del Pilar Campus -------------------------------------------------
+
+  {
+    "name": "Graduate School",
+    "compound": "M.H. Del Pilar",
+    "latitude": null,
+    "longitude": null,
+    "floors": null,
+    "rooms": {}
+  },
+  {
+    "name": "Hasmin Hostel",
+    "compound": "M.H. Del Pilar",
+    "latitude": null,
+    "longitude": null,
+    "floors": null,
+    "rooms": {}
+  },
+  {
+    "name": "College of Nutrition and Food Science",
+    "compound": "M.H. Del Pilar",
+    "latitude": null,
+    "longitude": null,
+    "floors": null,
+    "rooms": {}
+  },
+  {
+    "name": "College of Tourism and Hospitality Management",
+    "compound": "M.H. Del Pilar",
+    "latitude": null,
+    "longitude": null,
+    "floors": null,
+    "rooms": {}
+  }
+]
