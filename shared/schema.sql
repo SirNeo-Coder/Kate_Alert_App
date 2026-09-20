@@ -40,6 +40,26 @@ create table buildings (
   unique (school_id, name)
 );
 
+-- One row per enrolled student. This is the roster of issued NFC tags.
+--
+-- tag_uid is what the phone reads off the student's personal tag. It is unique
+-- per school: a tag belongs to exactly one student.
+--
+-- An alert does NOT have a foreign key to this table on purpose. See the alerts
+-- table below.
+create table students (
+  id             bigint generated always as identity primary key,
+  school_id      bigint not null references schools (id),
+  student_number text not null,
+  full_name      text not null,
+  tag_uid        text not null,
+  is_active      boolean not null default true,  -- false when a tag is lost, replaced or the student leaves
+  created_at     timestamptz not null default now(),
+
+  unique (school_id, student_number),
+  unique (school_id, tag_uid)
+);
+
 -- One row per emergency alert. Fields mirror shared/alert_record.jsonc.
 --
 -- The compound is not stored here. It is carried on the building row, so
@@ -50,12 +70,21 @@ create table buildings (
 -- confirms which one. Only the confirmed building is stored.
 create table alerts (
   id          bigint generated always as identity primary key,
-  student_id  text not null,                        -- read from the student's personal NFC tag
+  student_id  text not null,                        -- the tag_uid read from the student's personal NFC tag
+
+  -- student_id is stored as the raw tag_uid, with no foreign key to students.
+  -- This is deliberate: an alert from an unrecognised tag must still be
+  -- recorded and shown to the admin. A tag missing from the roster is a reason
+  -- to flag the alert, never a reason to refuse it. Matching a tag_uid to a
+  -- student happens when the alert is read, not when it is written.
   building_id bigint not null references buildings (id),
   floor       int,                                  -- confirmed by the student
   room        text,                                 -- confirmed by the student
   raised_at   timestamptz not null default now(),
-  status      text not null default 'new'           -- 'new' | 'acknowledged' | 'resolved'
+  status      text not null default 'new'           -- 'new' | 'acknowledged' | 'resolved' | 'false_alarm'
+                                                    -- 'false_alarm' is set by an admin. Counting these per
+                                                    -- tag_uid is how repeat false alarms surface; the school
+                                                    -- handles them as a discipline matter, not the software.
 );
 
 -- Fetching the active alerts for the admin map is the query that runs most.
@@ -76,6 +105,7 @@ create index alerts_status_raised_at_idx on alerts (status, raised_at desc);
 -- ---------------------------------------------------------------------------
 
 alter table schools   enable row level security;
+alter table students  enable row level security;
 alter table buildings enable row level security;
 alter table alerts    enable row level security;
 
@@ -89,6 +119,14 @@ create policy "anyone can read schools"
 create policy "anyone can read buildings"
   on buildings for select
   using (true);
+
+-- The roster is NOT readable by the student app. It holds names and student
+-- numbers, and the app has no reason to read it -- the tag identifies the
+-- student on its own. Only a signed-in admin can see or manage it.
+create policy "admins manage students"
+  on students for all
+  to authenticated
+  using (true) with check (true);
 
 -- Campus setup: only a signed-in admin can add or edit buildings.
 create policy "admins manage schools"

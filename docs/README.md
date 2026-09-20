@@ -33,5 +33,6 @@ Project of the same name.
 - [[stack]] — hosting, back end and database
 - [[student-app]] — the Android phone app
 - [[admin-web]] — the monitoring and campus setup web app
+- [[nfc-tags]] — choosing the tags, and tag cloning
 - [[pup-sta-mesa-campus]] — the sample campus data
 - [[open-items]] — decisions set aside, and data still missing
